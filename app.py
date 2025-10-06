@@ -84,6 +84,31 @@ def generate_action_plan(benefit_title):
         'Follow the instructions listed on the provider\'s page.'
     ])
 
+def generate_action_plan_ai(benefit_title):
+    """
+    Generate action plan for a benefit using Gemini AI.
+    """
+    print(f"Generating AI action plan for: '{benefit_title}'")
+
+    model = genai.GenerativeModel('gemini-1.5-flash')
+    prompt = f"""
+    Generate a simple 3-step action plan for an employee to avail the '{benefit_title}' benefit.
+    Return it as a JSON array of strings, like:
+    ["Step 1: ...", "Step 2: ...", "Step 3: ..."]
+
+    Only return the JSON array, no other text.
+    """
+
+    try:
+        response = model.generate_content(prompt)
+        import json
+        plan = json.loads(response.text.strip())
+        return plan
+    except Exception as e:
+        print(f"Error generating action plan: {e}")
+        # Fallback to mock
+        return generate_action_plan(benefit_title)
+
 def generate_benefits(category):
     """
     Generate employee benefits for a given category using Gemini AI.
@@ -143,7 +168,7 @@ def classify():
 def generate_plan():
     data = request.get_json()
     benefit_title = data.get('benefit_title', '')
-    plan = generate_action_plan(benefit_title)
+    plan = generate_action_plan_ai(benefit_title)
     return jsonify({'plan': plan})
 
 @app.route('/benefits/<category>', methods=['GET'])
