@@ -4,6 +4,7 @@ import BenefitInputScreen from './components/BenefitInputScreen';
 import LoadingScreen from './components/LoadingScreen';
 import BenefitListScreen from './components/BenefitListScreen';
 import BenefitDetailsScreen from './components/BenefitDetailsScreen';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import './App.css';
 
 const App = () => {
@@ -60,6 +61,7 @@ const App = () => {
       <main>
         {renderScreen()}
       </main>
+      <SpeedInsights />
     </div>
   );
 }
