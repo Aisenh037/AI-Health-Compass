@@ -12,6 +12,7 @@ interface AppState {
   error: string | null;
   isLoading: boolean;
   chatMessages: { role: 'user' | 'ai'; content: string }[];
+  darkMode: boolean;
 }
 
 interface AppActions {
@@ -28,6 +29,8 @@ interface AppActions {
   classificationError: (error: string) => void;
   selectBenefit: (benefit: Benefit) => void;
   generatePlanSuccess: (plan: string[]) => void;
+  regenerateBenefits: (benefits: Benefit[]) => void;
+  toggleDarkMode: () => void;
   reset: () => void;
 }
 
@@ -41,6 +44,7 @@ const initialState: AppState = {
   error: null,
   isLoading: false,
   chatMessages: [],
+  darkMode: false,
 };
 
 export const useAppStore = create<AppState & AppActions>()(
@@ -91,6 +95,13 @@ export const useAppStore = create<AppState & AppActions>()(
           isLoading: false
         }),
 
+        regenerateBenefits: (benefits) => set({
+          benefits,
+          isLoading: false
+        }),
+
+        toggleDarkMode: () => set((state) => ({ darkMode: !state.darkMode })),
+
         reset: () => set(initialState),
       }),
       {
@@ -98,6 +109,7 @@ export const useAppStore = create<AppState & AppActions>()(
         partialize: (state) => ({
           userInput: state.userInput,
           category: state.category,
+          darkMode: state.darkMode,
           // Persist user preferences but not sensitive data
         }),
       }

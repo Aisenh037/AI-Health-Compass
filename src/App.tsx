@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useAppStore } from './stores/appStore';
 import BenefitInputScreen from './components/BenefitInputScreen';
 import LoadingScreen from './components/LoadingScreen';
@@ -8,12 +8,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import './App.css';
 
 const App = () => {
-  const { currentScreen, reset } = useAppStore();
-
-  // Dark mode state
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('darkMode') === 'true';
-  });
+  const { currentScreen, reset, darkMode, toggleDarkMode } = useAppStore();
 
   useEffect(() => {
     if (darkMode) {
@@ -21,7 +16,6 @@ const App = () => {
     } else {
       document.documentElement.classList.remove('dark');
     }
-    localStorage.setItem('darkMode', darkMode.toString());
   }, [darkMode]);
 
   const renderScreen = () => {
@@ -52,7 +46,7 @@ const App = () => {
       <header className="app-header">
         <h1>AI Health Compass</h1>
         <button
-          onClick={() => setDarkMode(!darkMode)}
+          onClick={toggleDarkMode}
           className="dark-mode-toggle"
         >
           {darkMode ? '☀️ Light' : '🌙 Dark'}

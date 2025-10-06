@@ -72,6 +72,23 @@ export const getBenefitsByCategory = async (category: string): Promise<Benefit[]
   }
 };
 
+export const regenerateBenefits = async (category: string): Promise<Benefit[]> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/benefits/${encodeURIComponent(category)}/regenerate`, {
+      method: 'POST',
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const benefits: Benefit[] = await response.json();
+    return benefits;
+  } catch (error) {
+    console.error('Error regenerating benefits:', error);
+    // Fallback to static data
+    return benefitsData.filter(b => b.category === category);
+  }
+};
+
 
 /**
  * AI Prompt for Action Plan:

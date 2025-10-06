@@ -115,7 +115,7 @@ def generate_benefits(category, seed=None):
 
     model = genai.GenerativeModel('gemini-1.5-flash')
     prompt = f"""
-    Generate 3-5 employee health benefits for the category '{category}'.
+    Generate 4-6 employee health benefits for the category '{category}'.
     Use seed {seed} for variety to ensure different options.
     Each benefit should have:
     - title: a string title
