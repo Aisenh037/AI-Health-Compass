@@ -19,7 +19,7 @@ const BenefitInputScreen = () => {
       if (category === 'Unknown') {
         classificationError('We couldn\'t classify your input. Please try describing your need differently.');
       } else {
-        const recommendedBenefits = getBenefitsByCategory(category);
+        const recommendedBenefits = await getBenefitsByCategory(category);
         classificationSuccess(category, recommendedBenefits);
       }
     } catch {

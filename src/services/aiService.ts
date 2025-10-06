@@ -55,8 +55,21 @@ export const classifyNeed = async (userInput: string): Promise<string> => {
   return 'Unknown';
 };
 
-export const getBenefitsByCategory = (category: string): Benefit[] => {
-  return benefitsData.filter(b => b.category === category);
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
+export const getBenefitsByCategory = async (category: string): Promise<Benefit[]> => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/benefits/${encodeURIComponent(category)}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const benefits: Benefit[] = await response.json();
+    return benefits;
+  } catch (error) {
+    console.error('Error fetching benefits:', error);
+    // Fallback to static data
+    return benefitsData.filter(b => b.category === category);
+  }
 };
 
 

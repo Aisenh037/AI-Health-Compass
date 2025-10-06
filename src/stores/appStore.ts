@@ -3,7 +3,7 @@ import { devtools, persist } from 'zustand/middleware';
 import type { Benefit } from '../services/mockData';
 
 interface AppState {
-  currentScreen: 'input' | 'loading' | 'list' | 'details' | 'error';
+  currentScreen: 'input' | 'loading' | 'list' | 'details' | 'error' | 'chat';
   userInput: string;
   category: string;
   benefits: Benefit[];
@@ -11,6 +11,7 @@ interface AppState {
   actionPlan: string[];
   error: string | null;
   isLoading: boolean;
+  chatMessages: { role: 'user' | 'ai'; content: string }[];
 }
 
 interface AppActions {
@@ -39,6 +40,7 @@ const initialState: AppState = {
   actionPlan: [],
   error: null,
   isLoading: false,
+  chatMessages: [],
 };
 
 export const useAppStore = create<AppState & AppActions>()(
