@@ -7,7 +7,7 @@ interface AxiosRequestConfigWithRetry extends AxiosRequestConfig {
 }
 
 // Environment variables with defaults
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
 const API_TIMEOUT = Number(import.meta.env.VITE_API_TIMEOUT) || 10000;
 const MAX_RETRIES = Number(import.meta.env.VITE_MAX_RETRIES) || 3;
 
